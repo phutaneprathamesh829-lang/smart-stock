@@ -1,0 +1,25 @@
+pipeline {
+    agent any
+    stages {
+        stage('Build and Deploy') {
+            steps {
+                // Ensure Docker socket permissions are open
+                sh 'chmod 666 /var/run/docker.sock || true'
+                
+                // Navigate into the sub-directory containing your Dockerfile
+                dir('smart-stock') {
+                    sh 'docker build -t smart-stock-app .'
+                }
+                
+                // Clean up old container and launch the new deployment
+                sh 'docker rm -f smart-stock-container || true'
+                sh 'docker run -d -p 8080:8080 --name smart-stock-container smart-stock-app'
+            }
+        }
+    }
+    post {
+        always {
+            jiraSendBuildInfo site: 'phutaneprathamesh829.atlassian.net'
+        }
+    }
+}
