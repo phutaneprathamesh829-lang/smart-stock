@@ -6,10 +6,10 @@ pipeline {
                 echo 'Building SmartStock project...'
             }
         }
-        stage('Notify Jira') {
-            steps {
-                jiraSendBuildInfo site: 'phutaneprathamesh829.atlassian.net', credentialsId: 'jira-api-token'
-            }
+    }
+    post {
+        always {
+            jiraSendBuildInfo site: 'prathamesh829.atlassian.net'
         }
     }
 }
