@@ -3,7 +3,7 @@ pipeline {
     stages {
         stage('Build') {
             steps {
-                echo 'SCRUM-5: Building SmartStock project for Jira traceability'
+                echo 'SCRUM-5: Executing SmartStock build pipeline...'
             }
         }
     }
